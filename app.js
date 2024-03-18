@@ -9,12 +9,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 
 const uuid = require("uuid");
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-app.engine("ejs", ejsMate);
-app.use(express.static(path.join(__dirname, "/public")));
+
 const MongoStore = require("connect-mongo");
 const dbUrl = process.env.ATLASDB_URL;
 const store = MongoStore.create({
@@ -39,13 +34,20 @@ const sessionOptions = {
     httpOnly: true,
   },
 };
-app.use(session(sessionOptions));
-app.use(flash());
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname, "/public")));
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
+
+app.use(session(sessionOptions));
+app.use(flash());
 
 main()
   .then(() => {
