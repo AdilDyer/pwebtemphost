@@ -54,8 +54,9 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/pweb");
+  await mongoose.connect(dbUrl);
 }
+
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
 });
