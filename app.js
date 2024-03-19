@@ -10,21 +10,21 @@ const session = require("express-session");
 
 const uuid = require("uuid");
 
-const MongoStore = require("connect-mongo");
+// const MongoStore = require("connect-mongo");
 const dbUrl = process.env.ATLASDB_URL;
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
-  touchAfter: 24 * 3600,
-});
-store.on("error", () => {
-  console.log("ERROR in Mongo Session Store ", err);
-});
+// const store = MongoStore.create({
+//   mongoUrl: dbUrl,
+//   crypto: {
+//     secret: process.env.SECRET,
+//   },
+//   touchAfter: 24 * 3600,
+// });
+// store.on("error", () => {
+//   console.log("ERROR in Mongo Session Store ", err);
+// });
 
 const sessionOptions = {
-  store,
+  // store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
@@ -59,8 +59,8 @@ async function main() {
   await mongoose.connect(dbUrl);
 }
 
-app.listen(8080, () => {
-  console.log("server is listening to port 8080");
+app.listen(10000, () => {
+  console.log("server is listening to port 10000");
 });
 
 app.get("/", (req, res) => {
